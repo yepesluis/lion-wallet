@@ -38,8 +38,9 @@ public class MovementController {
 		log.info("entrando en controlador");
 		movementRqstValidator.validate(movementDto);
 		return new ResponseEntity<>(
-				movementService.recordMovement(
-						movementDtoMapper.dtoToMovement(movementDto)),
+				movementDtoMapper.movementToDto(
+						movementService.recordMovement(
+								movementDtoMapper.dtoToMovement(movementDto))),
 				HttpStatus.CREATED);
 	}
 	

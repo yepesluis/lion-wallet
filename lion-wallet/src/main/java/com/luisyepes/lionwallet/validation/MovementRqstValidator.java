@@ -40,7 +40,7 @@ public class MovementRqstValidator {
 			errors.append(ErrorMessages.CATEGORY_MOVEMENT_MISSING);
 		}
 		
-		if (MovementType.getByName(movementType.toLowerCase()) == null) {
+		if (movementType != null && MovementType.getByName(movementType.toLowerCase()) == null) {
 			errors.append(ErrorMessages.INVALID_MOVEMENT_TYPE);
 		}
 		

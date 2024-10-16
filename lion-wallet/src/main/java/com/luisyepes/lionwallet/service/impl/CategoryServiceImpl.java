@@ -32,6 +32,7 @@ public class CategoryServiceImpl implements CategoryService {
 		if(categoryOpt.isPresent()) {
 			return categoryOpt.get();
 		} else {
+			categoryOpt = categoryDao.findById(id);
 			throw new CategoryNotFoundException(ErrorMessages.CATEGORY_NOT_FOUND + id);
 		}	
 	}
