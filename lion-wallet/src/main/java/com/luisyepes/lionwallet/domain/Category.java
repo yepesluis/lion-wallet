@@ -16,6 +16,8 @@ import lombok.Setter;
 @Setter
 public class Category extends AbstractEntity {
 	
+	private static final long serialVersionUID = 1L;
+
 	@Column(nullable = false)
 	private String name;
 	
@@ -23,32 +25,16 @@ public class Category extends AbstractEntity {
 			mappedBy = "category", 
 			cascade = CascadeType.ALL,
 			orphanRemoval = true)
-	private Set<Income> incomes;
+	private Set<Movement> movements;
 	
-	@OneToMany(
-			mappedBy = "category",
-			cascade = CascadeType.ALL,
-			orphanRemoval = true)
-	private Set<Outflow> outflows;
-	
-	public void addIncome(Income income) {
-		this.incomes.add(income);
-		income.setCategory(this);
+	public void addMovement(Movement movement) {
+		this.movements.add(movement);
+		movement.setCategory(this);
 	}
 	
-	public void removeIncome(Income income) {
-		this.incomes.remove(income);
-		income.setCategory(null);
+	public void removeMovement(Movement movement) {
+		this.movements.remove(movement);
+		movement.setCategory(null);
 	}
-	
-	public void addOutflow(Outflow outflow) {
-		this.outflows.add(outflow);
-		outflow.setCategory(this);
-	}
-	
-	public void removeOutflow(Outflow outflow) {
-		this.outflows.remove(outflow);
-		outflow.setCategory(null);
-	}
-	
+
 }

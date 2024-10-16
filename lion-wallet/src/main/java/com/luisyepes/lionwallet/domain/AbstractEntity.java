@@ -1,31 +1,21 @@
 package com.luisyepes.lionwallet.domain;
 
-import org.springframework.data.domain.Persistable;
+import java.io.Serializable;
 
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.MappedSuperclass;
+import lombok.Data;
 
 @MappedSuperclass
-public abstract class AbstractEntity implements Persistable<Long> {
+@Data
+public abstract class AbstractEntity implements Serializable {
 
+	private static final long serialVersionUID = 1L;
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	protected Long id;
-	
-	@Override
-	public boolean isNew(){
-		return getId() == null;
-	}
-	
-	@Override
-	public Long getId() {
-		return id;
-	}
-	
-	public void setId(Long id) {
-		this.id = id;
-	}
 
 }
