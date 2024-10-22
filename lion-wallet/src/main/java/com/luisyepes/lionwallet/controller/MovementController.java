@@ -6,6 +6,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.luisyepes.lionwallet.domain.dto.MovementDto;
@@ -13,10 +15,8 @@ import com.luisyepes.lionwallet.domain.util.MovementDtoMapper;
 import com.luisyepes.lionwallet.service.MovementService;
 import com.luisyepes.lionwallet.validation.MovementRqstValidator;
 
-import lombok.extern.slf4j.Slf4j;
-
 @RestController
-@Slf4j
+@RequestMapping("/movements")
 public class MovementController {
 	
 	@Autowired
@@ -28,14 +28,13 @@ public class MovementController {
 	@Autowired
 	MovementDtoMapper movementDtoMapper;
 	
-	@GetMapping("/")
+	@GetMapping("/health-check")
 	public ResponseEntity<?> welcome(){
-		return new ResponseEntity<String>("Bienvenido a Lion Wallet", HttpStatus.OK);
+		return new ResponseEntity<String>("Bienvenido a Lion Wallet, server is up and ready!", HttpStatus.OK);
 	}
 	
 	@PostMapping("/record-movement")
 	public ResponseEntity<?> recordMovement(@RequestBody MovementDto movementDto) {
-		log.info("entrando en controlador");
 		movementRqstValidator.validate(movementDto);
 		return new ResponseEntity<>(
 				movementDtoMapper.movementToDto(
@@ -44,9 +43,10 @@ public class MovementController {
 				HttpStatus.CREATED);
 	}
 	
-	@PostMapping("/testing-post") 
-	public  ResponseEntity<?> postest() {
-		return new ResponseEntity<String>("Bienvenido a Lion Wallet desde post", HttpStatus.OK);
+	@GetMapping("/total-outflows")
+	public ResponseEntity<?> getTotalOutflowsMonth(@RequestParam int month, @RequestParam int year) {
+		return new ResponseEntity<>(
+				movementService.getTotalOutflowsMonth(month, year), HttpStatus.OK);
 	}
-
+	
 }

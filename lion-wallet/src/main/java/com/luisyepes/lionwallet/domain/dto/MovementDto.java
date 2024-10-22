@@ -15,7 +15,7 @@ public class MovementDto {
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
 	private LocalDate date;
 	private String title;
-	private Long value;
+	private Double value;
 	private CategoryDto category;
 
 }

@@ -1,5 +1,6 @@
 package com.luisyepes.lionwallet.service.impl;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -44,11 +45,6 @@ public class CategoryServiceImpl implements CategoryService {
 	}
 
 	@Override
-	public Category getReferenceById(Long Id) {
-		return categoryDao.getReferenceById(Id);
-	}
-
-	@Override
 	public Category validateAndGetCategory(Category categoryFromDto) {
 		//it is assumed category was already validated as not null
 		Long categoryIdInDto = categoryFromDto.getId();
@@ -60,9 +56,20 @@ public class CategoryServiceImpl implements CategoryService {
 				throw new CategoryAlreadyExistsException(ErrorMessages.CATEGORY_WITH_DIFFERENT_NAME + category.getName());
 			}
 		} else {
-			category = createCategory(categoryFromDto);
+			//it should be just one
+			List<Category> categoriesByName = findCategoryByName(categoryNameInDto);
+			if (categoriesByName.isEmpty()) {
+				category = createCategory(categoryFromDto);
+			} else {
+				return categoriesByName.get(0);
+			}
 		}
 		return category;
+	}
+
+	@Override
+	public List<Category> findCategoryByName(String name) {
+		return categoryDao.findByName(name);
 	}
 
 }

@@ -1,9 +1,13 @@
 package com.luisyepes.lionwallet.dao;
 
-import org.springframework.data.jpa.repository.JpaRepository;
+import java.util.List;
+
+import org.springframework.data.repository.CrudRepository;
 
 import com.luisyepes.lionwallet.domain.Category;
 
-public interface CategoryDao extends JpaRepository<Category, Long> {
+public interface CategoryDao extends CrudRepository<Category, Long> {
+
+	List<Category> findByName(String name);
 
 }

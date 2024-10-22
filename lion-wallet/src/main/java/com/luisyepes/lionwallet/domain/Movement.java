@@ -33,7 +33,7 @@ public class Movement extends AbstractEntity {
 	@Column
 	private String title;
 	@Column(nullable = false)
-	private Long value;
+	private Double value;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	private Category category;
