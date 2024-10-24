@@ -26,7 +26,7 @@ public class Category extends AbstractEntity {
 			cascade = CascadeType.ALL,
 			orphanRemoval = true)
 	private Set<Movement> movements;
-	
+
 	public void addMovement(Movement movement) {
 		this.movements.add(movement);
 		movement.setCategory(this);
